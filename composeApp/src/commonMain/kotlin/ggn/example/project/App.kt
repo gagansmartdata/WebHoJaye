@@ -90,8 +90,10 @@ fun DeveloperProfileScreen() {
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            Column(modifier = Modifier.padding(20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier.padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
                 Text("Gagandeep Singh", fontSize = 24.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(8.dp))
@@ -122,33 +124,34 @@ fun DeveloperProfileScreen() {
                 }
 
                 // Skills
-                    Card(
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clickable { showSkills = !showSkills }.indication(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ),
+                    backgroundColor = Color.White,
+                    elevation = 8.dp,
+                    shape = RoundedCornerShape(10.dp)
+                ) {
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
                             .padding(16.dp)
-                            .clickable { showSkills = !showSkills }.indication(
-                                interactionSource = remember { MutableInteractionSource()},
-                                        indication = null),
-                        backgroundColor = Color.White,
-                        elevation = 8.dp,
-                        shape = RoundedCornerShape(10.dp)
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(16.dp)
+                        Text("Skills", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                        AnimatedVisibility(
+                            showSkills, enter = fadeIn() + expandVertically(),
+                            exit = fadeOut() + shrinkVertically(),
                         ) {
-                            Text("Skills", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                            AnimatedVisibility(
-                                showSkills, enter = fadeIn() + expandVertically(),
-                                exit = fadeOut() + shrinkVertically(),
-                            ) {
-                                if(showSkills){
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    SkillsList()
-                                }
+                            if (showSkills) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                SkillsList()
                             }
                         }
                     }
+                }
 
 
                 // Projects
@@ -161,28 +164,29 @@ fun DeveloperProfileScreen() {
                     elevation = 8.dp,
                     shape = RoundedCornerShape(10.dp)
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(16.dp)
+                    Text("Projects", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    AnimatedVisibility(
+                        showProjects, enter = fadeIn() + expandVertically(),
+                        exit = fadeOut() + shrinkVertically(),
                     ) {
-                        Text("Projects", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                        AnimatedVisibility(
-                            showSkills, enter = fadeIn() + expandVertically(),
-                            exit = fadeOut() + shrinkVertically(),
-                        ) {
                         if (showProjects) {
-                            Spacer(modifier = Modifier.height(8.dp))
-                            // Add your project composables here
-                            ProjectItem(
-                                title = "Project 1",
-                                description = "Description of Project 1"
-                            )
-                            ProjectItem(
-                                title = "Project 2",
-                                description = "Description of Project 2"
-                            )
-                        }
+
+                            Column(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                            ) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                // Add your project composables here
+                                ProjectItem(
+                                    title = "Project 1",
+                                    description = "Description of Project 1"
+                                )
+                                ProjectItem(
+                                    title = "Project 2",
+                                    description = "Description of Project 2"
+                                )
                             }
+                        }
                     }
                 }
 
